@@ -7,14 +7,22 @@
             <th>Name</th>
             <th>Producer</th>
             <th>Sponsor</th>
+            <th>Actions</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="prize in list.prizes">
-            <td class="prize-thumb"><img ng-src="{{prize.imageUrl}}" /></td>
+            <td class="prize-thumb" ng-if="prize.imageUrl.length"><img ng-src="{{prize.imageUrl}}" /></td>
+            <td class="prize-thumb" ng-if="!prize.imageUrl.length"><img ng-src="{{placeholderPrize}}" /></td>
             <td>{{prize.name}}<br /><b>ID:</b> {{prize.id}}</td>
             <td>{{prize.producer}}</td>
             <td>{{prize.sponsorName}}</td>
+            <td style="vertical-align:middle">
+                <button type="button" class="btn btn-info btn-sm" ng-click="edit(prize)">
+                    <span class="glyphicon glyphicon-edit"></span>
+                    Edit
+                </button>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -24,6 +32,9 @@
     </div>
 
     <p>
-        <button type="button" class="btn btn-success" ng-click="add()">Add prize</button>
+        <button type="button" class="btn btn-success" ng-click="add()">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add
+        </button>
     </p>
 </div>

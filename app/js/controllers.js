@@ -132,12 +132,21 @@ xeniaControllers.controller('EventDetailsCtrl', ['$scope', '$route', '$routePara
     }
 ]);
 
-xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', function ($scope, $location, Prizes) {
+xeniaControllers.controller('PrizesCtrl', ['$scope', '$location', 'Prizes', 'PrizeService', function ($scope, $location, Prizes, PrizeService) {
     $scope.list = Prizes.query();
 
     $scope.add = function () {
         $location.path('/prizes/add');
     };
+
+    $scope.placeholderPrize = 'css/images/no-image.png';
+
+    $scope.edit = function (prize) {
+            PrizeService.setCurrent(prize);
+            var id = prize.id;
+            $location.path('/prize/'+ id);
+            console.log('edit prize id:' + id);
+        };
 }]);
 
 xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'serverUrl', 'Prizes', function ($scope, $location, $http, serverUrl, Prizes) {
@@ -157,6 +166,32 @@ xeniaControllers.controller('PrizeAddCtrl', ['$scope', '$location', '$http', 'se
                     text: 'Error :)'
                 });
             });
+        }
+    };
+
+    $scope.cancel = function () {
+        $location.path('/prizes');
+    };
+}]);
+
+xeniaControllers.controller('PrizeEditCtrl', ['$scope', '$location', 'PrizeService', function ($scope, $location, PrizeService) {
+    $scope.prize = PrizeService.getCurrent()
+    $scope.save = function (prize) {
+        if ($scope.prize  != undefined && $scope.prizeEditForm.$valid) {
+            PrizeService.update(
+                $scope.prize
+            ).success(function (response) {
+                $location.path('/prizes');
+                console.log(result);
+            }).error(function () {
+                displayError({
+                    text: 'Error :)'
+                });
+                console.log('Edit prize was not successful! Result: ' + result);
+            });
+        }
+        else {
+            console.log('Edit prize is not defined or valid')
         }
     };
 
