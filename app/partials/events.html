@@ -7,7 +7,7 @@
     </div>
 
     <ul class="event-list" ng-if="events.events.length">
-        <li ng-repeat="event in events.events" class="event-list-el">
+        <li ng-repeat="event in events.events | orderBy:sortType:sortReverse" class="event-list-el">
             <a ng-href="#/event/{{event.id}}">
                 <div class="date">
                     <div class="day">{{event.startDate| date:'dd'}}</div>
