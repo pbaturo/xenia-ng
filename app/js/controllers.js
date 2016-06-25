@@ -10,6 +10,10 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
     function ($scope, $http, $route, serverUrl, notificationArea, Events) {
         $scope.events = Events.query()
 
+
+        $scope.sortType = 'startDate';
+        $scope.sortReverse = true;
+
         $scope.refresh = function () {
             jQuery(notificationArea).html("Refreshing events...").fadeIn();
 
