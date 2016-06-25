@@ -14,6 +14,20 @@ xeniaControllers.controller('EventsListCtrl', ['$scope', '$http', '$route', 'ser
         $scope.sortType = 'startDate';
         $scope.sortReverse = true;
 
+        $scope.startDelete = function() {
+            $scope.isDeleting = true;
+        };
+
+        var stopDelete = function() {
+            $scope.isDeleting = false;
+        };
+
+        $scope.cancelDelete = function() {
+            stopDelete();
+        };
+
+        $scope.isDeleting = false;
+
         $scope.refresh = function () {
             jQuery(notificationArea).html("Refreshing events...").fadeIn();
 
